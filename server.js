@@ -105,7 +105,7 @@ app.post("/login", (req, res) => {
     return res;
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
     console.log("API running on localhost:3001");
 });
 
