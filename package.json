@@ -1,0 +1,30 @@
+{
+  "name": "assessment1-backend",
+  "version": "1.0.0",
+  "description": "Backend for assessment1 webapp",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sakamadzudzo/assessment1-backend.git"
+  },
+  "keywords": [
+    "node.js",
+    "express.js",
+    "jwt"
+  ],
+  "author": "sakamadzudzo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sakamadzudzo/assessment1-backend/issues"
+  },
+  "homepage": "https://github.com/sakamadzudzo/assessment1-backend#readme"
+}
