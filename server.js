@@ -11,10 +11,15 @@ app.get("/super-secure-resource", (req, res) => {
         try {
             const tokenVerify = jsonwebtoken.verify(token, jsonwebtoken_SECRET);
             if (tokenVerify) {
-                const loggedInUser = databse.filter(db => { if (db.username === tokenVerify.username) { return db; } });
-                delete loggedInUser.password;
+                const loggedInUser = databse.filter(db => {
+                    if (db.username === tokenVerify.username) {
+                        return db;
+                    }
+                });
+                const user = Object.assign({}, loggedInUser[0]);
+                delete user.password;
                 res
-                    .json(loggedInUser)
+                    .json(user)
                     .status(200);
             }
         } catch (err) {
@@ -34,53 +39,30 @@ app.get("/", (req, res) => {
         .json({ message: "Login first" });
 });
 
-// The secret should be an unguessable long string (you can use a password generator for this!)
 const jsonwebtoken_SECRET =
-    "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
+    "the json web token secret for assesment 1 backend is super super long xxYXjs7e7wb!@";
 
 app.post("/login", (req, res) => {
-    // console.log(req.body.username);
-    // console.log(res);
-    // Get the username and password to the json body data
     const { username, password } = req.body;
-    // Get the username to the json body data
-    // const username = req.body.username;
 
-    // Get the password to the json body data
-    // const password = req.body.password;
-
-    // Make two variable for further use
     let isPresent = false;
     let isPresnetIndex = null;
 
-    // Iterate a loop to the data items and
-    // check what data are method
     for (let i = 0; i < databse.length; i++) {
 
-        // If data username are matched so check
-        // the password are correct or not
         if (databse[i].username === username &&
             databse[i].password === password) {
 
-            // If both are correct so make
-            // isPresent variable true
             isPresent = true;
 
-            // And store the data index
             isPresnetIndex = i;
 
-            // Break the loop after matching
-            // successfully
             break;
         }
     }
 
-    // If isPresent is true, then create a
-    // token and pass to the response
     if (isPresent) {
 
-        // The jsonwebtoken.sign method are used
-        // to create token
         const token = jsonwebtoken.sign(
             databse[isPresnetIndex],
             jsonwebtoken_SECRET
@@ -89,7 +71,6 @@ app.post("/login", (req, res) => {
         const user = Object.assign({}, databse[isPresnetIndex]);
         delete user.password;
 
-        // Pass the data or token in response
         res.status(200).json({
             login: true,
             token: token,
@@ -97,7 +78,6 @@ app.post("/login", (req, res) => {
         });
     } else {
 
-        // If isPresent is false return the error
         res.status(401).json({
             login: false,
             error: 'please check username and password.'
