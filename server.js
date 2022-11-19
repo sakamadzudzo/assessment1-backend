@@ -12,6 +12,7 @@ app.get("/super-secure-resource", (req, res) => {
             const tokenVerify = jsonwebtoken.verify(token, jsonwebtoken_SECRET);
             if (tokenVerify) {
                 const loggedInUser = databse.filter(db => { if (db.username === tokenVerify.username) { return db; } });
+                delete loggedInUser.password;
                 res
                     .json(loggedInUser)
                     .status(200);
