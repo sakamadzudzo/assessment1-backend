@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 const jsonwebtoken = require("jsonwebtoken");
+const cors = require('cors')
+app.use(cors())
 
 app.get("/super-secure-resource", (req, res) => {
     const authHeader = req.header("Authorization");
@@ -20,17 +22,15 @@ app.get("/super-secure-resource", (req, res) => {
                 delete user.password;
                 res
                     .json(user)
-                    .status(200)
-                    .header("Access-Control-Allow-Origin", "*");
+                    .status(200);
             }
         } catch (err) {
-            res.status(400).json({ message: 'Invalid token' }).header("Access-Control-Allow-Origin", "*");
+            res.status(400).json({ message: 'Invalid token' });
         }
     } else {
         res
             .status(401)
-            .json({ message: "You need to be logged in to access this resource" })
-            .header("Access-Control-Allow-Origin", "*");
+            .json({ message: "You need to be logged in to access this resource" });
     }
     return res;
 });
@@ -38,8 +38,7 @@ app.get("/super-secure-resource", (req, res) => {
 app.get("/", (req, res) => {
     res
         .status(200)
-        .json({ message: "Login first" })
-        .header("Access-Control-Allow-Origin", "*");
+        .json({ message: "Login first" });
 });
 
 const jsonwebtoken_SECRET =
@@ -78,15 +77,13 @@ app.post("/login", (req, res) => {
             login: true,
             token: token,
             data: user
-        })
-        .header("Access-Control-Allow-Origin", "*");
+        });
     } else {
 
         res.status(401).json({
             login: false,
             error: 'please check username and password.'
-        })
-        .header("Access-Control-Allow-Origin", "*");
+        });
     }
     return res;
 });
