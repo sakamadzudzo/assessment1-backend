@@ -20,15 +20,17 @@ app.get("/super-secure-resource", (req, res) => {
                 delete user.password;
                 res
                     .json(user)
-                    .status(200);
+                    .status(200)
+                    .header("Access-Control-Allow-Origin", "*");
             }
         } catch (err) {
-            res.status(400).json({ message: 'Invalid token' });
+            res.status(400).json({ message: 'Invalid token' }).header("Access-Control-Allow-Origin", "*");
         }
     } else {
         res
             .status(401)
-            .json({ message: "You need to be logged in to access this resource" });
+            .json({ message: "You need to be logged in to access this resource" })
+            .header("Access-Control-Allow-Origin", "*");
     }
     return res;
 });
@@ -36,7 +38,8 @@ app.get("/super-secure-resource", (req, res) => {
 app.get("/", (req, res) => {
     res
         .status(200)
-        .json({ message: "Login first" });
+        .json({ message: "Login first" })
+        .header("Access-Control-Allow-Origin", "*");
 });
 
 const jsonwebtoken_SECRET =
@@ -75,13 +78,15 @@ app.post("/login", (req, res) => {
             login: true,
             token: token,
             data: user
-        });
+        })
+        .header("Access-Control-Allow-Origin", "*");
     } else {
 
         res.status(401).json({
             login: false,
             error: 'please check username and password.'
-        });
+        })
+        .header("Access-Control-Allow-Origin", "*");
     }
     return res;
 });
